@@ -8,7 +8,9 @@ on:
 
 jobs:
   keep-alive:
+    if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
     steps:
-      - name: Keep repo alive
-        run: echo "Still alive at $(date)"
+      - uses: liskin/gh-workflow-keepalive@v1
