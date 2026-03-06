@@ -1,7 +1,8 @@
 import constants from '../specs/constants.js';
 
 export default {
-  checkIsMyHoliday
+  checkIsMyHoliday,
+  isPast920JST,
 };
 
 /**
@@ -34,4 +35,17 @@ async function checkIsMyHoliday() {
   }
 
   return false;
+}
+
+async function isPast920JST() {
+  const now = new Date();
+
+  const tokyoTime = new Date(
+    now.toLocaleString("en-US", { timeZone: "Asia/Tokyo" })
+  );
+
+  const hours = tokyoTime.getHours();
+  const minutes = tokyoTime.getMinutes();
+
+  return hours > 9 || (hours === 9 && minutes >= 20);
 }

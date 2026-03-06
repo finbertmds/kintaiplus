@@ -6,7 +6,9 @@ import constants from './constants.js';
 describe('KintaiPlus', () => {
     it('clock_in', async () => {
         var holiday = await Utils.checkIsMyHoliday();
-        if (!holiday) {
+        var past920JST = await Utils.isPast920JST();
+
+        if (!holiday && !past920JST) {
             console.log("今日は祝日ではありません");
             await LoginPage.open()
             await LoginPage.login(constants.KTP_ID, constants.KTP_PASSWORD);
