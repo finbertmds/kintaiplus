@@ -2,10 +2,22 @@ import axios from 'axios';
 import constants from '../specs/constants.js';
 
 export default {
+  isWeekend,
   checkIsMyHoliday,
   isPast920JST,
   sendTeamsMessage,
+  sendTeamsMessageWithRetry,
 };
+
+/**
+ * 週末かどうかを確認する
+ * @returns 週末であるフラグ
+ */
+async function isWeekend() {
+  var today = new Date(new Date().toLocaleString("ja-JP", { timeZone: 'Asia/Tokyo' }));
+  var dayOfWeek = today.getDay();
+  return dayOfWeek === 0 || dayOfWeek === 6;
+}
 
 /**
  * 有休を確認する
@@ -52,7 +64,23 @@ async function isPast920JST() {
   return hours > 9 || (hours === 9 && minutes >= 20);
 }
 
-async function sendTeamsMessage(text: string, isWarning: boolean = false) {
+// if send teams message failed, retry up to 3 times with 5 seconds interval
+async function sendTeamsMessageWithRetry(text: string, isWarning: boolean = false, retries: number = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await sendTeamsMessage(text, isWarning, true);
+      return;
+    } catch (error) {
+      console.error(`Failed to send teams message. Attempt ${i + 1} of ${retries}. Error:`, error);
+      if (i < retries - 1) {
+        await new Promise(resolve => setTimeout(resolve, 5000));
+      }
+    }
+  }
+  console.error('Failed to send teams message after maximum retries.');
+}
+
+async function sendTeamsMessage(text: string, isWarning: boolean = false, isThrowError: boolean = false) {
   const webhook = constants.TEAMS_WEBHOOK_URL;
 
   let bodyList = []
@@ -130,7 +158,13 @@ async function sendTeamsMessage(text: string, isWarning: boolean = false) {
     });
     console.log('Response Status:', response.status);
     console.log('Response Data:', response.data);
-  } catch (error) {
-    console.error('Error:', error);
+  } catch (error: any) {
+    console.error(
+      `Teams API Error: ${error.response?.status} - ${error.message}`
+    );
+
+    if (isThrowError) {
+      throw error;
+    }
   }
 }

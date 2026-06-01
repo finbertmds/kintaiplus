@@ -5,12 +5,15 @@ import constants from './constants.js';
 
 describe('KintaiPlus', () => {
     it('clock_in', async () => {
+        var isWeekend = await Utils.isWeekend();
         var holiday = await Utils.checkIsMyHoliday();
         var past920JST = await Utils.isPast920JST();
 
-        if (past920JST) {
+        if (isWeekend) {
+            console.log("今日は週末です");
+        } else if (past920JST) {
             console.log("現在は9:20 JSTを過ぎています");
-            await Utils.sendTeamsMessage(
+            await Utils.sendTeamsMessageWithRetry(
                 "現在は9:20 JSTを過ぎています。打刻がまだされていません。",
                 true
             );
@@ -23,7 +26,7 @@ describe('KintaiPlus', () => {
             console.log("start clock in");
             await LoginPage.clockIn();
             await browser.pause(1000);
-            await Utils.sendTeamsMessage(
+            await Utils.sendTeamsMessageWithRetry(
                 "打刻が完了しました。"
             );
             await browser.pause(5000);
