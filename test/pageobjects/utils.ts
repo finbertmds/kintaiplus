@@ -4,7 +4,7 @@ import constants from '../specs/constants.js';
 export default {
   isWeekend,
   checkIsMyHoliday,
-  isPast920JST,
+  isPastTimeJST,
   sendTeamsMessage,
   sendTeamsMessageWithRetry,
 };
@@ -51,7 +51,7 @@ async function checkIsMyHoliday() {
   return false;
 }
 
-async function isPast920JST() {
+async function isPastTimeJST(paramHours: number, paramMinutes: number) {
   const now = new Date();
 
   const tokyoTime = new Date(
@@ -61,7 +61,7 @@ async function isPast920JST() {
   const hours = tokyoTime.getHours();
   const minutes = tokyoTime.getMinutes();
 
-  return hours > 9 || (hours === 9 && minutes >= 20);
+  return hours > paramHours || (hours === paramHours && minutes >= paramMinutes);
 }
 
 // if send teams message failed, retry up to 3 times with 5 seconds interval

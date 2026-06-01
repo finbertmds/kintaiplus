@@ -7,14 +7,14 @@ describe('KintaiPlus', () => {
     it('clock_in', async () => {
         var isWeekend = await Utils.isWeekend();
         var holiday = await Utils.checkIsMyHoliday();
-        var past920JST = await Utils.isPast920JST();
+        var pastTimeJST = await Utils.isPastTimeJST(9, 25);
 
         if (isWeekend) {
             console.log("今日は週末です");
-        } else if (past920JST) {
-            console.log("現在は9:20 JSTを過ぎています");
+        } else if (pastTimeJST) {
+            console.log("現在は9:25 JSTを過ぎています");
             await Utils.sendTeamsMessageWithRetry(
-                "現在は9:20 JSTを過ぎています。打刻がまだされていません。",
+                "現在は9:25 JSTを過ぎています。打刻がまだされていません。",
                 true
             );
             await browser.pause(5000);
