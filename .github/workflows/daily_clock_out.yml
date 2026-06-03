@@ -22,3 +22,4 @@ jobs:
       env:
         KTP_ID: ${{ secrets.KTP_ID }}
         KTP_PASSWORD: ${{ secrets.KTP_PASSWORD }}
+        TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
