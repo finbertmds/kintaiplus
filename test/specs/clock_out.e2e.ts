@@ -7,8 +7,15 @@ describe('KintaiPlus', () => {
     it('clock_out', async () => {
         var isWeekend = await Utils.isWeekend();
         var holiday = await Utils.checkIsMyHoliday();
+        var isBeforeTimeJST = await Utils.isBeforeTimeJST(18, 30);
+
         if (isWeekend) {
             console.log("今日は週末です");
+        } else if (isBeforeTimeJST) {
+            console.log("現在は18:30 JST前です");
+            await Utils.sendTeamsMessageWithRetry(
+                "現在は18:30 JST前です。退勤打刻はこの時間以降に実行してください。"
+            );
         } else if (!holiday) {
             console.log("今日は祝日ではありません");
             await LoginPage.open()

@@ -5,6 +5,7 @@ export default {
   isWeekend,
   checkIsMyHoliday,
   isPastTimeJST,
+  isBeforeTimeJST,
   sendTeamsMessage,
   sendTeamsMessageWithRetry,
 };
@@ -62,6 +63,16 @@ async function isPastTimeJST(paramHours: number, paramMinutes: number) {
   const minutes = tokyoTime.getMinutes();
 
   return hours > paramHours || (hours === paramHours && minutes >= paramMinutes);
+}
+
+async function isBeforeTimeJST(paramHours: number, paramMinutes: number) {
+  const now = new Date();
+  const tokyoTime = new Date(
+    now.toLocaleString("en-US", { timeZone: "Asia/Tokyo" })
+  );
+  const hours = tokyoTime.getHours();
+  const minutes = tokyoTime.getMinutes();
+  return hours < paramHours || (hours === paramHours && minutes < paramMinutes);
 }
 
 // if send teams message failed, retry up to 3 times with 5 seconds interval
