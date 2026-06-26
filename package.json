@@ -13,9 +13,11 @@
   "scripts": {
     "wdio": "wdio run ./wdio.conf.ts",
     "clock_in": "npx wdio run ./wdio.conf.ts --spec clock_in.e2e.ts",
-    "clock_out": "npx wdio run ./wdio.conf.ts --spec clock_out.e2e.ts"
+    "clock_out": "npx wdio run ./wdio.conf.ts --spec clock_out.e2e.ts",
+    "server": "node server.js"
   },
   "dependencies": {
-    "axios": "^1.13.6"
+    "axios": "^1.13.6",
+    "express": "^5.2.1"
   }
 }
