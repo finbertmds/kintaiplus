@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 
-app.post("/clock-in", (req, res) => {
+app.get("/clock-in", (req, res) => {
   console.log("Clock in time: " + new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" }));
   exec(
     "npm run clock_in",
@@ -32,7 +32,7 @@ app.post("/clock-in", (req, res) => {
 });
 
 
-app.post("/clock-out", (req, res) => {
+app.get("/clock-out", (req, res) => {
   console.log("Clock out time: " + new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" }));
   exec(
     "npm run clock_out",
