@@ -2,7 +2,7 @@ name: Daily Clock In
 
 on:
   schedule:
-    - cron: "0,20 0 * * 0-4"
+    - cron: "0,20 0 * * 1-5"
   workflow_dispatch:
 
 jobs:
