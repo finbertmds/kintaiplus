@@ -26,9 +26,9 @@ app.get("/clock-in", (req, res) => {
         output: stdout
       });
 
+      console.log("Clock in done in time: " + new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" }));
     }
   );
-
 });
 
 
@@ -50,9 +50,9 @@ app.get("/clock-out", (req, res) => {
         output:stdout
       });
 
+      console.log("Clock out done in time: " + new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" }));
     }
   );
-
 });
 
 
