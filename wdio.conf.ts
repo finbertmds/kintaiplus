@@ -62,7 +62,11 @@ export const config: Options.Testrunner = {
         {
             browserName: 'chrome',   // or 'chromium'
             'goog:chromeOptions': {
-                args: ['headless', 'no-sandbox', 'disable-dev-shm-usage']
+                args: [
+                    '--headless=new',
+                    '--no-sandbox',
+                    '--disable-dev-shm-usage'
+                ]
             }
         }
         // {
