@@ -59,22 +59,18 @@ export const config: Options.Testrunner = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [
+        // {
+        //     browserName: 'chrome',   // or 'chromium'
+        //     'goog:chromeOptions': {
+        //         args: ['headless', 'disable-gpu']
+        //     }
+        // }, 
         {
-            browserName: 'chrome',   // or 'chromium'
-            'goog:chromeOptions': {
-                args: [
-                    '--headless=new',
-                    '--no-sandbox',
-                    '--disable-dev-shm-usage'
-                ]
+            browserName: 'firefox',
+            'moz:firefoxOptions': {
+                args: ['-headless']
             }
         }
-        // {
-        //     browserName: 'firefox',
-        //     'moz:firefoxOptions': {
-        //         args: ['-headless']
-        //     }
-        // }
     ],
 
     //
